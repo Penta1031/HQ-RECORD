@@ -27,6 +27,12 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
+        /* 텍스트 내용이 길어질 때 사용할 깔끔한 스크롤바 */
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
+
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-15px); }
@@ -73,7 +79,7 @@
         .cloud-menu-card {
             background: #f9fbff;
             border-radius: 1.25rem;
-            padding: 1.25rem;
+            padding: 1rem; /* 상하좌우 여백 축소 */
             display: flex;
             align-items: center;
             transition: all 0.2s ease;
@@ -94,14 +100,14 @@
     <div id="app" class="app-container transition-colors duration-500 overflow-y-auto h-screen no-scrollbar">
         
         <!-- ==================== 인덱스(오픈) 화면 ==================== -->
-        <div id="view-index" class="p-5 pt-16 flex flex-col min-h-screen">
+        <div id="view-index" class="p-5 pt-12 flex flex-col min-h-screen"> <!-- 상단 여백 축소 -->
             
-            <div class="text-center mb-12 mt-4">
-                <img src="https://pbs.twimg.com/profile_banners/1355963394403172352/1766513408/1500x500" class="w-28 h-28 mx-auto mb-5 rounded-full object-cover shadow-md border-2 border-white" alt="프로필 배너">
-                <h1 class="text-[2rem] font-bold tracking-tight text-gray-900">혚쾌 레코드</h1>
+            <div class="text-center mb-8 mt-2"> <!-- 마진 축소 -->
+                <img src="https://pbs.twimg.com/profile_banners/1355963394403172352/1766513408/1500x500" class="w-24 h-24 mx-auto mb-4 rounded-full object-cover shadow-md border-2 border-white" alt="프로필 배너"> <!-- 프로필 이미지 사이즈 약간 축소 -->
+                <h1 class="text-[1.8rem] font-bold tracking-tight text-gray-900">혚쾌 레코드</h1> <!-- 텍스트 크기 약간 축소 -->
             </div>
 
-            <div class="flex flex-col gap-4 mb-10">
+            <div class="flex flex-col gap-3 mb-8"> <!-- 메뉴 간격(gap-3) 및 마진 축소 -->
                 
                 <!-- 1. 혚쾌 입덕가이드 -->
                 <button onclick="navigate('guide')" class="cloud-menu-card text-left w-full group">
@@ -245,14 +251,15 @@
         <!-- ==================== 가챠 결과 화면 ==================== -->
         <div id="view-gachaResult" class="p-4 hidden flex-col items-center justify-center min-h-screen bg-black/30 backdrop-blur-md fixed inset-0 z-50">
             <div class="bg-white rounded-[2rem] w-full max-w-[400px] p-4 relative shadow-2xl animate-[fadeIn_0.3s_ease-out]">
-                <button onclick="navigate('gachaHome')" class="absolute top-4 right-4 text-gray-400 p-2 text-xl hover:text-gray-800 bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center">✕</button>
+                <button onclick="navigate('gachaHome')" class="absolute top-4 right-4 text-gray-400 p-2 text-xl hover:text-gray-800 bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center z-10">✕</button>
                 <div class="w-full aspect-square bg-gray-50 rounded-[1.5rem] overflow-hidden mb-6 mt-8 p-1 flex items-center justify-center relative border border-gray-100">
                     <div class="absolute inset-0 flex items-center justify-center p-2">
                         <div id="gacha-media" class="w-full h-full flex items-center justify-center"></div>
                     </div>
                 </div>
-                <div class="text-center mb-6 px-2">
-                    <h2 id="gacha-title" class="text-[1.1rem] font-bold mb-1 flex justify-center items-center gap-2 break-keep text-gray-800"></h2>
+                <!-- 텍스트 영역에 스크롤 속성 적용 -->
+                <div class="text-center mb-6 px-2 overflow-y-auto custom-scrollbar max-h-[22vh]">
+                    <h2 id="gacha-title" class="text-[1.1rem] font-bold mb-2 break-keep text-gray-800"></h2>
                     <p id="gacha-date" class="text-xs text-blue-500 font-medium"></p>
                 </div>
                 <div class="flex border-t border-gray-100 pt-4 gap-2">

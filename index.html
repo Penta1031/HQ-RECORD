@@ -4,19 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>혚쾌 레코드</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 웹 폰트 (Pretendard) -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <!-- Twitter 임베드 스크립트 -->
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <style>
         body {
             font-family: 'Pretendard', sans-serif;
-            letter-spacing: -0.03em; /* 자간 좁히기 적용 */
+            letter-spacing: -0.03em;
             background-color: #ffffff;
             -webkit-tap-highlight-color: transparent;
-            overflow: hidden; /* 기본 스크롤 차단, 내부 컨테이너에서 처리 */
+            overflow: hidden;
         }
         
         .bg-theme-blue {
@@ -27,7 +24,6 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* 텍스트 내용이 길어질 때 사용할 깔끔한 스크롤바 */
         .custom-scrollbar::-webkit-scrollbar { width: 5px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 4px; }
@@ -39,47 +35,27 @@
         }
         .animate-bounce-custom { animation: bounce 1s infinite ease-in-out; }
 
-        /* 월드컵 상하 배치 구조 */
-        .vs-container {
-            flex: 1; min-height: 0; position: relative; display: flex; flex-direction: column; width: 100%; margin-bottom: 1rem;
-        }
-        .vs-item {
-            flex: 1; min-height: 0; width: 100%; position: relative; cursor: pointer; transition: transform 0.2s; background-color: transparent; 
-        }
+        .vs-container { flex: 1; min-height: 0; position: relative; display: flex; flex-direction: column; width: 100%; margin-bottom: 1rem; }
+        .vs-item { flex: 1; min-height: 0; width: 100%; position: relative; cursor: pointer; transition: transform 0.2s; background-color: transparent; }
         .vs-item:active { transform: scale(0.98); }
-        .vs-item-inner {
-            position: absolute; left: 0; right: 0; display: flex; align-items: center; justify-content: center; overflow: hidden;
-        }
+        .vs-item-inner { position: absolute; left: 0; right: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .vs-item:first-child .vs-item-inner { top: 0; bottom: 20px; }
         .vs-item:last-child .vs-item-inner { top: 20px; bottom: 0; }
 
-        .media-cover {
-            width: 100% !important; height: 100% !important; object-fit: cover !important; display: block; pointer-events: none; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); background-color: transparent; 
-        }
+        .media-cover { width: 100% !important; height: 100% !important; object-fit: cover !important; display: block; pointer-events: none; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); background-color: transparent; }
 
-        .embed-wrapper {
-            width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: transparent;
-        }
-        .embed-wrapper iframe, .embed-wrapper twitter-widget {
-            max-width: 100% !important; max-height: 100% !important; margin: 0 auto !important; border-radius: 12px !important; box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important;
-        }
+        .embed-wrapper { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: transparent; }
+        .embed-wrapper iframe, .embed-wrapper twitter-widget { max-width: 100% !important; max-height: 100% !important; margin: 0 auto !important; border-radius: 12px !important; box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important; }
 
-        .vs-badge-wrapper {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; pointer-events: none;
-        }
-        .vs-badge {
-            background: white; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+        .vs-badge-wrapper { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; pointer-events: none; }
+        .vs-badge { background: white; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
-        }
+        .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02); }
 
-        /* 메인 인덱스 메뉴 카드 스타일 */
         .cloud-menu-card {
             background: #f9fbff;
-            border-radius: 1.25rem;
-            padding: 1rem; /* 상하좌우 여백 축소 */
+            border-radius: 1rem;
+            padding: 0.8rem 1rem;
             display: flex;
             align-items: center;
             transition: all 0.2s ease;
@@ -90,84 +66,69 @@
             background: #f0f4fa;
         }
 
-        .app-container {
-            max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; background-color: #ffffff;
-        }
+        .app-container { max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; background-color: #ffffff; }
     </style>
 </head>
 <body class="text-gray-800 antialiased selection:bg-blue-200">
 
     <div id="app" class="app-container transition-colors duration-500 overflow-y-auto h-screen no-scrollbar">
         
-        <!-- ==================== 인덱스(오픈) 화면 ==================== -->
-        <div id="view-index" class="p-5 pt-12 flex flex-col min-h-screen"> <!-- 상단 여백 축소 -->
+        <div id="view-index" class="p-4 pt-8 flex flex-col h-full"> 
             
-            <div class="text-center mb-8 mt-2"> <!-- 마진 축소 -->
-                <img src="https://pbs.twimg.com/profile_banners/1355963394403172352/1766513408/1500x500" class="w-24 h-24 mx-auto mb-4 rounded-full object-cover shadow-md border-2 border-white" alt="프로필 배너"> <!-- 프로필 이미지 사이즈 약간 축소 -->
-                <h1 class="text-[1.8rem] font-bold tracking-tight text-gray-900">혚쾌 레코드</h1> <!-- 텍스트 크기 약간 축소 -->
+            <div class="text-center mb-6 mt-2">
+                <img src="https://pbs.twimg.com/profile_banners/1355963394403172352/1766513408/1500x500" class="w-16 h-16 mx-auto mb-3 rounded-full object-cover shadow-md border-2 border-white" alt="프로필 배너">
+                <h1 class="text-[1.4rem] font-bold tracking-tight text-gray-900">혚쾌 레코드</h1>
             </div>
 
-            <div class="flex flex-col gap-3 mb-8"> <!-- 메뉴 간격(gap-3) 및 마진 축소 -->
+            <div class="flex flex-col gap-2.5 mb-4">
                 
-                <!-- 1. 혚쾌 입덕가이드 -->
                 <button onclick="navigate('guide')" class="cloud-menu-card text-left w-full group">
-                    <div class="text-2xl mr-4 w-10 text-center drop-shadow-sm">🔰</div>
+                    <div class="text-xl mr-3 w-8 text-center drop-shadow-sm">🔰</div>
                     <div class="flex-1">
-                        <h2 class="font-semibold text-gray-800 text-[1rem] mb-0.5">혚쾌 입덕가이드</h2>
-                        <p class="text-[0.8rem] text-gray-400 font-normal">처음 오신 분들을 위한 안내서</p>
+                        <h2 class="font-semibold text-gray-800 text-[0.95rem] mb-0.5">혚쾌 입덕가이드</h2>
+                        <p class="text-[0.75rem] text-gray-400 font-normal">처음 오신 분들을 위한 안내서</p>
                     </div>
                     <div class="text-blue-500 font-medium group-hover:translate-x-1 transition-transform">↗</div>
                 </button>
 
-                <!-- 2. 혚쾌 아카이브 -->
                 <button onclick="window.open('https://archive-project.netlify.app/archive', '_blank')" class="cloud-menu-card text-left w-full group">
-                    <div class="text-2xl mr-4 w-10 text-center drop-shadow-sm">📂</div>
+                    <div class="text-xl mr-3 w-8 text-center drop-shadow-sm">📂</div>
                     <div class="flex-1">
-                        <h2 class="font-semibold text-gray-800 text-[1rem] mb-0.5">혚쾌 아카이브</h2>
-                        <p class="text-[0.8rem] text-gray-400 font-normal">모든 떡밥 모아보기</p>
+                        <h2 class="font-semibold text-gray-800 text-[0.95rem] mb-0.5">혚쾌 아카이브</h2>
+                        <p class="text-[0.75rem] text-gray-400 font-normal">모든 떡밥 모아보기</p>
                     </div>
                     <div class="text-blue-500 font-medium group-hover:translate-x-1 transition-transform">↗</div>
                 </button>
 
-                <!-- 3. 혚쾌 월드컵 -->
                 <button onclick="window.open('https://hqworldcup.netlify.app/', '_blank')" class="cloud-menu-card text-left w-full group">
-                    <div class="text-2xl mr-4 w-10 text-center drop-shadow-sm">🏆</div>
+                    <div class="text-xl mr-3 w-8 text-center drop-shadow-sm">🏆</div>
                     <div class="flex-1">
-                        <h2 class="font-semibold text-gray-800 text-[1rem] mb-0.5">혚쾌 월드컵</h2>
-                        <p class="text-[0.8rem] text-gray-400 font-normal">혚쾌러가 선택한 최고의 떡밥은?</p>
+                        <h2 class="font-semibold text-gray-800 text-[0.95rem] mb-0.5">혚쾌 월드컵</h2>
+                        <p class="text-[0.75rem] text-gray-400 font-normal">혚쾌러가 선택한 최고의 떡밥은?</p>
                     </div>
                     <div class="text-blue-500 font-medium group-hover:translate-x-1 transition-transform">↗</div>
                 </button>
 
-                <!-- 4. N년전 오늘의 혚쾌 -->
                 <button onclick="navigate('anniversary')" class="cloud-menu-card text-left w-full group">
-                    <div class="text-2xl mr-4 w-10 text-center drop-shadow-sm">🕰️</div>
+                    <div class="text-xl mr-3 w-8 text-center drop-shadow-sm">🕰️</div>
                     <div class="flex-1">
-                        <h2 class="font-semibold text-gray-800 text-[1rem] mb-0.5">N년전 오늘의 혚쾌</h2>
-                        <p class="text-[0.8rem] text-gray-400 font-normal">과거의 오늘 어떤 떡밥이 있었을까?</p>
+                        <h2 class="font-semibold text-gray-800 text-[0.95rem] mb-0.5">N년전 오늘의 혚쾌</h2>
+                        <p class="text-[0.75rem] text-gray-400 font-normal">과거의 오늘 어떤 떡밥이 있었을까?</p>
                     </div>
                     <div class="text-blue-500 font-medium group-hover:translate-x-1 transition-transform">↗</div>
                 </button>
 
-                <!-- 5. 오늘의 혚쾌 뽑기 -->
                 <button onclick="navigate('gachaHome')" class="cloud-menu-card text-left w-full group">
-                    <div class="text-2xl mr-4 w-10 text-center drop-shadow-sm">🍀</div>
+                    <div class="text-xl mr-3 w-8 text-center drop-shadow-sm">🍀</div>
                     <div class="flex-1">
-                        <h2 class="font-semibold text-gray-800 text-[1rem] mb-0.5">오늘의 혚쾌 뽑기</h2>
-                        <p class="text-[0.8rem] text-gray-400 font-normal">행운의 랜덤 혚쾌 뽑아보기</p>
+                        <h2 class="font-semibold text-gray-800 text-[0.95rem] mb-0.5">오늘의 혚쾌 뽑기</h2>
+                        <p class="text-[0.75rem] text-gray-400 font-normal">행운의 랜덤 혚쾌 뽑아보기</p>
                     </div>
                     <div class="text-blue-500 font-medium group-hover:translate-x-1 transition-transform">↗</div>
-                </button>
-            </div>
-
-            <div class="mt-auto pb-8 text-center text-xs text-gray-300">
-                <button onclick="window.open('https://x.com/Penta_1031', '_blank')" class="font-medium hover:text-gray-500 transition-colors">
-                    문의 @Penta_1031 ↗
                 </button>
             </div>
         </div>
 
-        <!-- ==================== 혚쾌 입덕가이드 링크 목록 화면 ==================== -->
         <div id="view-guide" class="p-5 pt-12 hidden flex-col min-h-screen bg-theme-blue">
             <button onclick="navigate('index')" class="text-left text-sm text-gray-500 hover:text-gray-800 mb-6 font-normal">
                 ← 메인으로
@@ -213,7 +174,6 @@
             </div>
         </div>
 
-        <!-- ==================== N년전 오늘의 혚쾌 화면 ==================== -->
         <div id="view-anniversary" class="p-5 pt-12 hidden flex-col min-h-screen bg-theme-blue">
             <button onclick="navigate('index')" class="text-left text-sm text-gray-500 hover:text-gray-800 mb-6 font-medium">
                 ← 메인으로
@@ -223,11 +183,9 @@
                 <p id="anniversary-date-text" class="text-blue-500 font-bold text-sm mt-1"></p>
             </div>
             <div id="anniversary-list" class="flex flex-col gap-3 pb-10">
-                <!-- 동적으로 채워집니다 -->
-            </div>
+                </div>
         </div>
 
-        <!-- ==================== 가챠 홈 화면 ==================== -->
         <div id="view-gachaHome" class="p-5 pt-12 hidden flex-col min-h-screen">
             <button onclick="navigate('index')" class="text-left text-sm text-gray-500 hover:text-gray-800 mb-10 font-medium">
                 ← 메인으로
@@ -242,13 +200,11 @@
             </button>
         </div>
 
-        <!-- ==================== 가챠 로딩 화면 ==================== -->
         <div id="view-gachaLoading" class="p-5 hidden flex-col items-center justify-center min-h-screen">
             <img src="https://pbs.twimg.com/media/HEtpxY8bIAA5WkZ?format=jpg&name=small" class="w-32 h-32 rounded-full object-cover mb-6 shadow-sm border border-gray-100 animate-bounce-custom" alt="로딩 중">
             <p class="text-lg font-bold text-gray-700">운명의 혚쾌를 고르는 중이에요</p>
         </div>
 
-        <!-- ==================== 가챠 결과 화면 ==================== -->
         <div id="view-gachaResult" class="p-4 hidden flex-col items-center justify-center min-h-screen bg-black/30 backdrop-blur-md fixed inset-0 z-50">
             <div class="bg-white rounded-[2rem] w-full max-w-[400px] p-4 relative shadow-2xl animate-[fadeIn_0.3s_ease-out]">
                 <button onclick="navigate('gachaHome')" class="absolute top-4 right-4 text-gray-400 p-2 text-xl hover:text-gray-800 bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center z-10">✕</button>
@@ -257,13 +213,11 @@
                         <div id="gacha-media" class="w-full h-full flex items-center justify-center"></div>
                     </div>
                 </div>
-                <!-- 텍스트 영역에 스크롤 속성 적용 -->
                 <div class="text-center mb-6 px-2 overflow-y-auto custom-scrollbar max-h-[22vh]">
                     <h2 id="gacha-title" class="text-[1.1rem] font-bold mb-2 break-keep text-gray-800"></h2>
                     <p id="gacha-date" class="text-xs text-blue-500 font-medium"></p>
                 </div>
                 <div class="flex border-t border-gray-100 pt-4 gap-2">
-                    <!-- 원문 링크 버튼 추가 -->
                     <button id="gacha-link-btn" class="flex-1 py-3 bg-blue-50 rounded-xl text-blue-600 font-bold hover:bg-blue-100 transition-colors active:scale-95 hidden">↗ 원문 보기</button>
                     <button onclick="startGacha()" class="flex-1 py-3 bg-gray-50 rounded-xl text-gray-600 font-bold hover:bg-gray-100 transition-colors active:scale-95">↺ 다시 뽑기</button>
                 </div>
@@ -272,7 +226,6 @@
 
     </div>
 
-    <!-- ==================== 스크립트 로직 ==================== -->
     <script>
         // 새로운 스프레드시트 CSV 링크로 교체
         const SPREADSHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT3FyUJEb9loQvzMObnX5ePNQpcmKDTWYmXC7_Gf8mtDOe-9jDj9iX7PbrDOQIFApea72zepANOtGuJ/pub?gid=0&single=true&output=csv";
@@ -295,10 +248,11 @@
                 const csvText = await response.text();
                 state.items = parseCSV(csvText);
                 
-                // 데이터 로드 완료 후 떡밥 개수 업데이트
+                // 데이터 로드 완료 후 떡밥 개수 업데이트 (썸네일이 있는 것만 카운트)
+                const gachaPool = state.items.filter(item => item.mediaUrl && item.mediaUrl.trim() !== '');
                 const gachaSubtitle = document.getElementById('gacha-subtitle');
                 if (gachaSubtitle) {
-                    gachaSubtitle.innerText = `${state.items.length}개의 떡밥 중 당신이 만날 떡밥은?`;
+                    gachaSubtitle.innerText = `${gachaPool.length}개의 떡밥 중 당신이 만날 떡밥은?`;
                 }
             } catch (error) {
                 console.error("Data Load Error:", error);
@@ -326,11 +280,9 @@
                     let key = h.trim();
                     val = val.replace(/^"|"$/g, '').trim(); 
                     
-                    // 새 스프레드시트 한글 헤더 매핑
                     if(key === '제목') obj.title = val;
                     if(key === '날짜') obj.date = val;
                     if(key === '썸네일') {
-                        // 미디어가 여러 개(쉼표, 띄어쓰기, 줄바꿈 등으로 구분)일 경우 맨 처음 링크만 추출
                         obj.mediaUrl = val.split(/[\s,]+/)[0].trim();
                     }
                     if(key === '링크') obj.link = val;
@@ -392,7 +344,6 @@
             
             const today = new Date();
             
-            // 날짜 비교를 위한 다양한 포맷 생성
             const m1 = String(today.getMonth() + 1).padStart(2, '0');
             const d1 = String(today.getDate()).padStart(2, '0');
             const m2 = String(today.getMonth() + 1);
@@ -400,7 +351,6 @@
             
             dateText.innerText = `${m2}월 ${d2}일의 기록`;
 
-            // 날짜 필터링 로직 (새로운 스프레드시트 포맷에 맞게 유연하게 대응)
             const matches = state.items.filter(item => {
                 if(!item.date) return false;
                 const d = item.date;
@@ -422,7 +372,6 @@
                 const div = document.createElement('div');
                 div.className = "bg-white rounded-2xl p-4 flex gap-4 shadow-sm border border-gray-50 cursor-pointer hover:bg-gray-50 transition-colors active:scale-[0.98]";
                 
-                // 클릭 시 외부 링크 이동
                 div.onclick = () => {
                     if(item.link) window.open(item.link, '_blank');
                 };
@@ -448,7 +397,6 @@
             container.innerHTML = '';
             if(!item) return;
             
-            // 썸네일 URL 
             const url = item.mediaUrl || '';
             
             const img = document.createElement('img');
@@ -467,15 +415,24 @@
                 alert("데이터를 아직 불러오지 못했습니다.");
                 return;
             }
+
+            // 썸네일(mediaUrl)이 존재하는 떡밥만 필터링
+            const gachaPool = state.items.filter(item => item.mediaUrl && item.mediaUrl.trim() !== '');
+
+            if(gachaPool.length === 0) {
+                alert("썸네일이 있는 떡밥이 없습니다.");
+                return;
+            }
+
             navigate('gachaLoading');
             setTimeout(() => {
-                const item = state.items[Math.floor(Math.random() * state.items.length)];
+                // 필터링된 데이터(gachaPool) 안에서만 랜덤 뽑기 진행
+                const item = gachaPool[Math.floor(Math.random() * gachaPool.length)];
                 
                 renderMediaElement(item, 'gacha-media');
                 document.getElementById('gacha-title').innerText = item.title || '';
                 document.getElementById('gacha-date').innerText = item.date || '';
                 
-                // 뽑힌 떡밥에 링크가 있을 경우 '원문 보기' 버튼 노출 설정
                 const linkBtn = document.getElementById('gacha-link-btn');
                 if(item.link) {
                     linkBtn.onclick = () => window.open(item.link, '_blank');
@@ -492,3 +449,5 @@
     </script>
 </body>
 </html>
+
+

@@ -10,17 +10,18 @@
 
     <!-- Open Graph (카카오톡, 페이스북 등) -->
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hq-record.vercel.app/">
     <meta property="og:title" content="혚쾌 레코드">
     <meta property="og:description" content="혚쾌 레코드">
     <meta property="og:image" content="https://pbs.twimg.com/media/HFCPMJ5aYAA_00z?format=jpg&name=large">
-    <meta property="og:url" content="https://hq-record.vercel.app/">
 
-    <!-- Twitter Card (X 미리보기) -->
+    <!-- Twitter Card (X 미리보기 - 큰 이미지 형태) -->
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@ZE2AM"> <!-- 예시 계정, 본인 계정으로 변경 가능 -->
+    <meta name="twitter:url" content="https://hq-record.vercel.app/">
     <meta name="twitter:title" content="혚쾌 레코드">
     <meta name="twitter:description" content="혚쾌 레코드">
     <meta name="twitter:image" content="https://pbs.twimg.com/media/HFCPMJ5aYAA_00z?format=jpg&name=large">
-    <meta name="twitter:url" content="https://hq-record.vercel.app/">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
@@ -104,9 +105,8 @@
         <!-- 메인 홈 -->
         <div id="view-index" class="view-section active p-4 pt-8"> 
             <div class="text-center mb-6 mt-2">
-                <!-- 프로필 이미지: 완전한 원형(rounded-full) -->
-                <img src="https://pbs.twimg.com/profile_banners/1355963394403172352/1766513408/1500x500" class="w-16 h-16 mx-auto mb-3 rounded-full object-cover shadow-md border-2 border-white" alt="Profile Image">
-                <!-- 빛 이모티콘 및 영문 설명 삭제 -->
+                <!-- 썸네일: 완전한 원형(rounded-full) -->
+                <img src="https://pbs.twimg.com/profile_banners/1355963394403172352/1766513408/1500x500" class="w-16 h-16 mx-auto mb-3 rounded-full object-cover shadow-md border-2 border-white" alt="Profile">
                 <h1 class="text-[1.4rem] font-bold tracking-tight text-gray-900">혚쾌 레코드</h1>
             </div>
 
@@ -184,7 +184,7 @@
             <div class="text-center mb-8 mt-10">
                 <div class="text-6xl mb-4">🍀</div>
                 <h1 class="text-2xl font-bold text-gray-900">오늘의 혚쾌 뽑기</h1>
-                <p id="gacha-subtitle" class="text-gray-400 text-sm mt-2">떡밥 로딩 중...</p>
+                <p id="gacha-subtitle" class="text-gray-400 text-sm mt-2">기록 로딩 중...</p>
             </div>
             <button onclick="startGacha()" class="w-full bg-[#e8f5e9] text-[#2e7d32] border border-[#c8e6c9] rounded-3xl py-5 font-bold text-lg shadow-sm hover:bg-[#c8e6c9] active:scale-95 transition-all">
                 오늘 당신이 만날 혚쾌는?
@@ -259,7 +259,6 @@
         async function loadData() {
             try {
                 const response = await fetch(SPREADSHEET_CSV_URL);
-                if (!response.ok) throw new Error("Network error");
                 const csvText = await response.text();
                 state.items = parseCSV(csvText);
                 state.isLoaded = true;
@@ -318,14 +317,14 @@
             list.innerHTML = '';
             if(!state.isLoaded) return;
             const today = new Date();
-            const m1 = String(today.getMonth() + 1).padStart(2, '0');
-            const d1 = String(today.getDate()).padStart(2, '0');
             const m2 = String(today.getMonth() + 1);
             const d2 = String(today.getDate());
             dateText.innerText = `${m2}월 ${d2}일의 기록`;
             const matches = state.items.filter(item => {
                 if(!item.date) return false;
                 const d = item.date;
+                const m1 = String(today.getMonth() + 1).padStart(2, '0');
+                const d1 = String(today.getDate()).padStart(2, '0');
                 return d.includes(`-${m1}-${d1}`) || d.includes(`-${m2}-${d2}`) || 
                        d.includes(`.${m1}.${d1}`) || d.includes(`.${m2}.${d2}`) ||
                        d.includes(`${m2}월 ${d2}일`) || d.includes(`${m1}월 ${d1}일`);
@@ -345,7 +344,7 @@
 
         function startGacha() {
             const gachaPool = state.items.filter(item => item.mediaUrl && item.mediaUrl.trim() !== '');
-            if(gachaPool.length === 0) return showAlert("데이터 로드 중...");
+            if(gachaPool.length === 0) return showAlert("로딩 중...");
             navigate('gachaLoading');
             setTimeout(() => {
                 const item = gachaPool[Math.floor(Math.random() * gachaPool.length)];

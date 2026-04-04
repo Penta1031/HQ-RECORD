@@ -2,11 +2,28 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <!-- 기본 메타 데이터 -->
     <title>혚쾌 레코드</title>
+    <meta name="description" content="혚쾌 레코드">
+    <meta name="author" content="HQ Record">
+
+    <!-- Open Graph / Facebook / Kakao -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="혚쾌 레코드">
+    <meta property="og:description" content="혚쾌 레코드">
+    <meta property="og:image" content="https://pbs.twimg.com/media/HFCPMJ5aYAA_00z?format=jpg&name=large">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="혚쾌 레코드">
+    <meta name="twitter:description" content="혚쾌 레코드">
+    <meta name="twitter:image" content="https://pbs.twimg.com/media/HFCPMJ5aYAA_00z?format=jpg&name=large">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <style>
         body {
             font-family: 'Pretendard', sans-serif;
@@ -14,7 +31,6 @@
             background-color: #ffffff;
             -webkit-tap-highlight-color: transparent;
             overflow: hidden;
-            /* iOS 바운스 방지 및 전체 높이 고정 */
             height: 100%;
             position: fixed;
             width: 100%;
@@ -31,25 +47,23 @@
         .custom-scrollbar::-webkit-scrollbar { width: 5px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
 
-        @keyframes bounce {
+        @keyframes bounce-slow {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-10px); }
         }
-        .animate-bounce-custom { animation: bounce 1s infinite ease-in-out; }
+        .animate-bounce-slow { animation: bounce-slow 2s infinite ease-in-out; }
 
         .app-container { 
             max-width: 480px; 
             margin: 0 auto; 
-            height: 100dvh; /* iOS 주소창 대응 */
+            height: 100dvh;
             position: relative; 
             background-color: #ffffff;
             overflow-y: auto;
-            -webkit-overflow-scrolling: touch; /* iOS 스크롤 관성 및 부드러움 확보 */
+            -webkit-overflow-scrolling: touch;
         }
 
-        /* 뷰 공통 스타일: 최소 높이를 부모만큼 확보 */
         .view-section {
             min-height: 100%;
             display: none;
@@ -100,7 +114,9 @@
         <!-- 메인 홈 -->
         <div id="view-index" class="view-section active p-4 pt-8"> 
             <div class="text-center mb-6 mt-2">
-                <img src="https://pbs.twimg.com/profile_banners/1355963394403172352/1766513408/1500x500" class="w-16 h-16 mx-auto mb-3 rounded-full object-cover shadow-md border-2 border-white" alt="프로필 배너">
+                <!-- 프로필 이미지를 다시 원형(rounded-full)으로 변경 -->
+                <img src="https://pbs.twimg.com/profile_banners/1355963394403172352/1766513408/1500x500" class="w-16 h-16 mx-auto mb-3 rounded-full object-cover shadow-md border-2 border-white" alt="프로필">
+                <!-- 빛 이모티콘 및 영문 문구 삭제 -->
                 <h1 class="text-[1.4rem] font-bold tracking-tight text-gray-900">혚쾌 레코드</h1>
             </div>
 
@@ -161,40 +177,27 @@
                 <h1 class="text-xl font-bold text-gray-900">입덕가이드</h1>
                 <p class="text-gray-500 text-sm mt-1 font-normal">원하는 타래를 선택해 보세요!</p>
             </div>
-            
             <div class="flex flex-col gap-3 pb-10">
-                <button onclick="window.open('https://x.com/Penta_1031/status/1809943093581615574?s=20', '_blank')" class="bg-white rounded-2xl p-4 flex justify-between items-center shadow-sm border border-gray-100 hover:bg-gray-50 active:scale-95 transition-all text-left">
-                    <span class="font-medium text-gray-800 text-[0.95rem]">입덕가이드 처음부터</span>
-                    <span class="text-blue-500 font-normal shrink-0 ml-4">↗</span>
-                </button>
-                <button onclick="window.open('https://x.com/Penta_1031/status/1809943211961684028?s=20', '_blank')" class="bg-white rounded-2xl p-4 flex justify-between items-center shadow-sm border border-gray-100 hover:bg-gray-50 active:scale-95 transition-all text-left">
-                    <span class="font-medium text-gray-800 text-[0.95rem]">2017~2018</span>
-                    <span class="text-blue-500 font-normal shrink-0 ml-4">↗</span>
-                </button>
-                <button onclick="window.open('https://x.com/Penta_1031/status/1809943238180253904?s=20', '_blank')" class="bg-white rounded-2xl p-4 flex justify-between items-center shadow-sm border border-gray-100 hover:bg-gray-50 active:scale-95 transition-all text-left">
-                    <span class="font-medium text-gray-800 text-[0.95rem]">2019</span>
-                    <span class="text-blue-500 font-normal shrink-0 ml-4">↗</span>
-                </button>
-                <button onclick="window.open('https://x.com/Penta_1031/status/1809944465689460891?s=20', '_blank')" class="bg-white rounded-2xl p-4 flex justify-between items-center shadow-sm border border-gray-100 hover:bg-gray-50 active:scale-95 transition-all text-left">
-                    <span class="font-medium text-gray-800 text-[0.95rem]">2020</span>
-                    <span class="text-blue-500 font-normal shrink-0 ml-4">↗</span>
-                </button>
-                <button onclick="window.open('https://x.com/Penta_1031/status/1809945536398786840?s=20', '_blank')" class="bg-white rounded-2xl p-4 flex justify-between items-center shadow-sm border border-gray-100 hover:bg-gray-50 active:scale-95 transition-all text-left">
-                    <span class="font-medium text-gray-800 text-[0.95rem]">2021</span>
-                    <span class="text-blue-500 font-normal shrink-0 ml-4">↗</span>
-                </button>
-                <button onclick="window.open('https://x.com/Penta_1031/status/1809946857025740995?s=20', '_blank')" class="bg-white rounded-2xl p-4 flex justify-between items-center shadow-sm border border-gray-100 hover:bg-gray-50 active:scale-95 transition-all text-left">
-                    <span class="font-medium text-gray-800 text-[0.95rem]">2022</span>
-                    <span class="text-blue-500 font-normal shrink-0 ml-4">↗</span>
-                </button>
-                <button onclick="window.open('https://x.com/Penta_1031/status/1812147793760587922?s=20', '_blank')" class="bg-white rounded-2xl p-4 flex justify-between items-center shadow-sm border border-gray-100 hover:bg-gray-50 active:scale-95 transition-all text-left">
-                    <span class="font-medium text-gray-800 text-[0.95rem]">2023</span>
-                    <span class="text-blue-500 font-normal shrink-0 ml-4">↗</span>
-                </button>
-                <button onclick="window.open('https://x.com/Penta_1031/status/1976272580484137218?s=20', '_blank')" class="bg-white rounded-2xl p-4 flex justify-between items-center shadow-sm border border-gray-100 hover:bg-gray-50 active:scale-95 transition-all text-left">
-                    <span class="font-medium text-gray-800 text-[0.95rem]">2024</span>
-                    <span class="text-blue-500 font-normal shrink-0 ml-4">↗</span>
-                </button>
+                <script>
+                    const guides = [
+                        { t: "입덕가이드 처음부터", l: "https://x.com/Penta_1031/status/1809943093581615574" },
+                        { t: "2017~2018", l: "https://x.com/Penta_1031/status/1809943211961684028" },
+                        { t: "2019", l: "https://x.com/Penta_1031/status/1809943238180253904" },
+                        { t: "2020", l: "https://x.com/Penta_1031/status/1809944465689460891" },
+                        { t: "2021", l: "https://x.com/Penta_1031/status/1809945536398786840" },
+                        { t: "2022", l: "https://x.com/Penta_1031/status/1809946857025740995" },
+                        { t: "2023", l: "https://x.com/Penta_1031/status/1812147793760587922" },
+                        { t: "2024", l: "https://x.com/Penta_1031/status/1976272580484137218" }
+                    ];
+                    guides.forEach(g => {
+                        document.write(`
+                            <button onclick="window.open('${g.l}', '_blank')" class="bg-white rounded-2xl p-4 flex justify-between items-center shadow-sm border border-gray-100 hover:bg-gray-50 active:scale-95 transition-all text-left">
+                                <span class="font-medium text-gray-800 text-[0.95rem]">${g.t}</span>
+                                <span class="text-blue-500 font-normal shrink-0 ml-4">↗</span>
+                            </button>
+                        `);
+                    });
+                </script>
             </div>
         </div>
 
@@ -207,8 +210,7 @@
                 <h1 class="text-2xl font-bold text-gray-900">N년전 오늘</h1>
                 <p id="anniversary-date-text" class="text-blue-500 font-bold text-sm mt-1"></p>
             </div>
-            <div id="anniversary-list" class="flex flex-col gap-3 pb-10">
-                </div>
+            <div id="anniversary-list" class="flex flex-col gap-3 pb-10"></div>
         </div>
 
         <!-- 가챠 홈 -->
@@ -228,8 +230,8 @@
 
         <!-- 가챠 로딩 -->
         <div id="view-gachaLoading" class="view-section p-5 items-center justify-center">
-            <img src="https://pbs.twimg.com/media/HEtpxY8bIAA5WkZ?format=jpg&name=small" class="w-32 h-32 rounded-full object-cover mb-6 shadow-sm border border-gray-100 animate-bounce-custom" alt="로딩 중">
-            <p class="text-lg font-bold text-gray-700">운명의 혚쾌를 고르는 중이에요</p>
+            <div class="w-24 h-24 border-4 border-gray-100 border-t-blue-500 rounded-full animate-spin"></div>
+            <p class="text-lg font-bold text-gray-700 mt-6">운명의 혚쾌를 고르는 중이에요</p>
         </div>
 
         <!-- 가챠 결과 모달 -->
@@ -237,9 +239,7 @@
             <div class="bg-white rounded-[2rem] w-full max-w-[400px] p-4 relative shadow-2xl">
                 <button onclick="navigate('gachaHome')" class="absolute top-4 right-4 text-gray-400 p-2 text-xl hover:text-gray-800 bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center z-10">✕</button>
                 <div class="w-full aspect-square bg-gray-50 rounded-[1.5rem] overflow-hidden mb-6 mt-8 p-1 flex items-center justify-center relative border border-gray-100">
-                    <div class="absolute inset-0 flex items-center justify-center p-2">
-                        <div id="gacha-media" class="w-full h-full flex items-center justify-center"></div>
-                    </div>
+                    <div id="gacha-media" class="w-full h-full flex items-center justify-center"></div>
                 </div>
                 <div class="text-center mb-6 px-2 overflow-y-auto custom-scrollbar max-h-[22vh]">
                     <h2 id="gacha-title" class="text-[1.1rem] font-bold mb-2 break-keep text-gray-800"></h2>
@@ -258,17 +258,13 @@
 
     <script>
         const SPREADSHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRC80s5f91fT_g0tIDmNTTGbhihJqxC6VeNQ643GjbeVB25_-ycP0Tj-uhaz3d4cqOVkjU829dO8TT3/pub?gid=0&single=true&output=csv";
-
-        const state = {
-            view: 'index',
-            items: []
-        };
+        const state = { view: 'index', items: [], isLoaded: false };
 
         function showAlert(msg) {
             const toast = document.getElementById('custom-toast');
             toast.innerText = msg;
             toast.style.display = 'block';
-            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+            setTimeout(() => { toast.style.display = 'none'; }, 2500);
         }
 
         async function init() {
@@ -279,20 +275,14 @@
         async function loadData() {
             try {
                 const response = await fetch(SPREADSHEET_CSV_URL);
-                if (!response.ok) throw new Error("Network response was not ok");
+                if (!response.ok) throw new Error("Network error");
                 const csvText = await response.text();
                 state.items = parseCSV(csvText);
-                
+                state.isLoaded = true;
                 const gachaPool = state.items.filter(item => item.mediaUrl && item.mediaUrl.trim() !== '');
-                const gachaSubtitle = document.getElementById('gacha-subtitle');
-                if (gachaSubtitle) {
-                    gachaSubtitle.innerText = `${gachaPool.length}개의 떡밥 중 당신이 만날 떡밥은?`;
-                }
+                document.getElementById('gacha-subtitle').innerText = `${gachaPool.length}개의 떡밥 중 당신이 만날 떡밥은?`;
             } catch (error) {
-                console.error("Data Load Error:", error);
-                if(state.items.length === 0) {
-                     showAlert("데이터를 불러오지 못했습니다.");
-                }
+                showAlert("데이터를 불러오지 못했습니다.");
             }
         }
 
@@ -301,21 +291,18 @@
             const lines = str.split(/\r?\n/);
             if (lines.length < 2) return arr;
             const headers = splitCSVLine(lines[0]);
-
             for (let i = 1; i < lines.length; i++) {
                 if (!lines[i].trim()) continue;
                 const values = splitCSVLine(lines[i]);
                 const obj = {};
                 headers.forEach((h, idx) => {
                     if(!h) return;
-                    let val = values[idx] || '';
+                    let val = (values[idx] || '').trim().replace(/^"|"$/g, '');
                     let key = h.trim();
-                    val = val.replace(/^"|"$/g, '').trim(); 
                     if(key === '제목') obj.title = val;
                     if(key === '날짜') obj.date = val;
                     if(key === '썸네일') obj.mediaUrl = val.split(/[\s,]+/)[0].trim();
                     if(key === '링크') obj.link = val;
-                    obj[key] = val; 
                 });
                 if(obj.title) arr.push(obj);
             }
@@ -324,35 +311,20 @@
 
         function splitCSVLine(line) {
             const result = [];
-            let cur = '';
-            let inQuote = false;
+            let cur = ''; let inQuote = false;
             for (let i = 0; i < line.length; i++) {
                 const char = line[i];
                 if (char === '"') inQuote = !inQuote;
-                else if (char === ',' && !inQuote) {
-                    result.push(cur);
-                    cur = '';
-                } else cur += char;
+                else if (char === ',' && !inQuote) { result.push(cur); cur = ''; }
+                else cur += char;
             }
-            result.push(cur);
-            return result;
+            result.push(cur); return result;
         }
 
         function navigate(viewName) {
-            // 모든 뷰 비활성화
-            document.querySelectorAll('.view-section').forEach(el => {
-                el.classList.remove('active');
-            });
-            
-            // 타겟 뷰 활성화
-            const targetView = document.getElementById(`view-${viewName}`);
-            if(targetView) {
-                targetView.classList.add('active');
-            }
-            
-            // 스크롤 위치 상단 초기화
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(`view-${viewName}`).classList.add('active');
             document.getElementById('app').scrollTop = 0;
-
             if (viewName === 'anniversary') initAnniversary();
         }
 
@@ -360,15 +332,13 @@
             const list = document.getElementById('anniversary-list');
             const dateText = document.getElementById('anniversary-date-text');
             list.innerHTML = '';
-            
+            if(!state.isLoaded) return;
             const today = new Date();
             const m1 = String(today.getMonth() + 1).padStart(2, '0');
             const d1 = String(today.getDate()).padStart(2, '0');
             const m2 = String(today.getMonth() + 1);
             const d2 = String(today.getDate());
-            
             dateText.innerText = `${m2}월 ${d2}일의 기록`;
-
             const matches = state.items.filter(item => {
                 if(!item.date) return false;
                 const d = item.date;
@@ -376,59 +346,31 @@
                        d.includes(`.${m1}.${d1}`) || d.includes(`.${m2}.${d2}`) ||
                        d.includes(`${m2}월 ${d2}일`) || d.includes(`${m1}월 ${d1}일`);
             });
-
             if (matches.length === 0) {
                 list.innerHTML = `<div class="bg-white rounded-3xl p-8 text-center shadow-sm border border-gray-100 mt-4"><p class="text-gray-500 font-medium">기록된 떡밥이 없어요.</p></div>`;
                 return;
             }
-
             matches.forEach(item => {
                 const div = document.createElement('div');
                 div.className = "bg-white rounded-2xl p-4 flex gap-4 shadow-sm border border-gray-50 cursor-pointer active:scale-[0.98]";
                 div.onclick = () => { if(item.link) window.open(item.link, '_blank'); };
-                let thumbSrc = item.mediaUrl || 'https://images.unsplash.com/photo-1594322436404-5a0526db4d13?w=100&auto=format&fit=crop';
-                div.innerHTML = `
-                    <div class="w-16 h-16 bg-gray-100 rounded-xl overflow-hidden shrink-0">
-                        <img src="${thumbSrc}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1594322436404-5a0526db4d13?w=100&auto=format&fit=crop'">
-                    </div>
-                    <div class="flex flex-col justify-center">
-                        <div class="font-bold text-gray-800 text-sm mb-1 line-clamp-2">${item.title}</div>
-                        <div class="text-xs text-blue-400 font-medium">${item.date}</div>
-                    </div>`;
+                div.innerHTML = `<div class="w-16 h-16 bg-gray-100 rounded-xl overflow-hidden shrink-0"><img src="${item.mediaUrl || ''}" class="w-full h-full object-cover"></div><div class="flex flex-col justify-center"><div class="font-bold text-gray-800 text-sm mb-1 line-clamp-2">${item.title}</div><div class="text-xs text-blue-400 font-medium">${item.date}</div></div>`;
                 list.appendChild(div);
             });
         }
 
-        function renderMediaElement(item, containerId) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = '';
-            if(!item) return;
-            const img = document.createElement('img');
-            img.src = item.mediaUrl;
-            img.className = 'media-cover';
-            img.onerror = function() { this.src = 'https://images.unsplash.com/photo-1594322436404-5a0526db4d13?q=80&w=400&auto=format&fit=crop'; };
-            container.appendChild(img);
-        }
-
         function startGacha() {
             const gachaPool = state.items.filter(item => item.mediaUrl && item.mediaUrl.trim() !== '');
-            if(gachaPool.length === 0) {
-                showAlert("뽑을 수 있는 떡밥이 없습니다.");
-                return;
-            }
+            if(gachaPool.length === 0) return showAlert("떡밥이 없습니다.");
             navigate('gachaLoading');
             setTimeout(() => {
                 const item = gachaPool[Math.floor(Math.random() * gachaPool.length)];
-                renderMediaElement(item, 'gacha-media');
+                document.getElementById('gacha-media').innerHTML = `<img src="${item.mediaUrl}" class="media-cover">`;
                 document.getElementById('gacha-title').innerText = item.title;
-                document.getElementById('gacha-date').innerText = item.date;
+                document.getElementById('gacha-date').innerText = item.date || '';
                 const linkBtn = document.getElementById('gacha-link-btn');
-                if(item.link) {
-                    linkBtn.onclick = () => window.open(item.link, '_blank');
-                    linkBtn.classList.remove('hidden');
-                } else {
-                    linkBtn.classList.add('hidden');
-                }
+                if(item.link) { linkBtn.onclick = () => window.open(item.link, '_blank'); linkBtn.classList.remove('hidden'); }
+                else linkBtn.classList.add('hidden');
                 navigate('gachaResult');
             }, 1200);
         }
@@ -437,3 +379,4 @@
     </script>
 </body>
 </html>
+

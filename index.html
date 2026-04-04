@@ -14,11 +14,15 @@
             background-color: #ffffff;
             -webkit-tap-highlight-color: transparent;
             overflow: hidden;
+            /* iOS 바운스 방지 및 전체 높이 고정 */
+            height: 100%;
+            position: fixed;
+            width: 100%;
         }
         
         .bg-theme-blue {
             background: linear-gradient(180deg, #f4f8fc 0%, #ffffff 100%);
-            min-height: 100vh;
+            min-height: 100%;
         }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -35,22 +39,26 @@
         }
         .animate-bounce-custom { animation: bounce 1s infinite ease-in-out; }
 
-        .vs-container { flex: 1; min-height: 0; position: relative; display: flex; flex-direction: column; width: 100%; margin-bottom: 1rem; }
-        .vs-item { flex: 1; min-height: 0; width: 100%; position: relative; cursor: pointer; transition: transform 0.2s; background-color: transparent; }
-        .vs-item:active { transform: scale(0.98); }
-        .vs-item-inner { position: absolute; left: 0; right: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .vs-item:first-child .vs-item-inner { top: 0; bottom: 20px; }
-        .vs-item:last-child .vs-item-inner { top: 20px; bottom: 0; }
+        .app-container { 
+            max-width: 480px; 
+            margin: 0 auto; 
+            height: 100dvh; /* iOS 주소창 대응 */
+            position: relative; 
+            background-color: #ffffff;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch; /* iOS 스크롤 관성 및 부드러움 확보 */
+        }
 
-        .media-cover { width: 100% !important; height: 100% !important; object-fit: cover !important; display: block; pointer-events: none; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); background-color: transparent; }
+        /* 뷰 공통 스타일: 최소 높이를 부모만큼 확보 */
+        .view-section {
+            min-height: 100%;
+            display: none;
+            flex-direction: column;
+        }
 
-        .embed-wrapper { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: transparent; }
-        .embed-wrapper iframe, .embed-wrapper twitter-widget { max-width: 100% !important; max-height: 100% !important; margin: 0 auto !important; border-radius: 12px !important; box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important; }
-
-        .vs-badge-wrapper { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; pointer-events: none; }
-        .vs-badge { background: white; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-
-        .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02); }
+        .view-section.active {
+            display: flex;
+        }
 
         .cloud-menu-card {
             background: #f9fbff;
@@ -66,22 +74,37 @@
             background: #f0f4fa;
         }
 
-        .app-container { max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; background-color: #ffffff; }
+        #custom-toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            z-index: 9999;
+            display: none;
+            text-align: center;
+            min-width: 200px;
+        }
+
+        .media-cover { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
     </style>
 </head>
 <body class="text-gray-800 antialiased selection:bg-blue-200">
 
-    <div id="app" class="app-container transition-colors duration-500 overflow-y-auto h-screen no-scrollbar">
+    <div id="app" class="app-container no-scrollbar">
         
-        <div id="view-index" class="p-4 pt-8 flex flex-col h-full"> 
-            
+        <!-- 메인 홈 -->
+        <div id="view-index" class="view-section active p-4 pt-8"> 
             <div class="text-center mb-6 mt-2">
                 <img src="https://pbs.twimg.com/profile_banners/1355963394403172352/1766513408/1500x500" class="w-16 h-16 mx-auto mb-3 rounded-full object-cover shadow-md border-2 border-white" alt="프로필 배너">
                 <h1 class="text-[1.4rem] font-bold tracking-tight text-gray-900">혚쾌 레코드</h1>
             </div>
 
             <div class="flex flex-col gap-2.5 mb-4">
-                
                 <button onclick="navigate('guide')" class="cloud-menu-card text-left w-full group">
                     <div class="text-xl mr-3 w-8 text-center drop-shadow-sm">🔰</div>
                     <div class="flex-1">
@@ -129,7 +152,8 @@
             </div>
         </div>
 
-        <div id="view-guide" class="p-5 pt-12 hidden flex-col min-h-screen bg-theme-blue">
+        <!-- 입덕가이드 뷰 -->
+        <div id="view-guide" class="view-section p-5 pt-12 bg-theme-blue">
             <button onclick="navigate('index')" class="text-left text-sm text-gray-500 hover:text-gray-800 mb-6 font-normal">
                 ← 메인으로
             </button>
@@ -174,7 +198,8 @@
             </div>
         </div>
 
-        <div id="view-anniversary" class="p-5 pt-12 hidden flex-col min-h-screen bg-theme-blue">
+        <!-- N년전 오늘 뷰 -->
+        <div id="view-anniversary" class="view-section p-5 pt-12 bg-theme-blue">
             <button onclick="navigate('index')" class="text-left text-sm text-gray-500 hover:text-gray-800 mb-6 font-medium">
                 ← 메인으로
             </button>
@@ -186,7 +211,8 @@
                 </div>
         </div>
 
-        <div id="view-gachaHome" class="p-5 pt-12 hidden flex-col min-h-screen">
+        <!-- 가챠 홈 -->
+        <div id="view-gachaHome" class="view-section p-5 pt-12">
             <button onclick="navigate('index')" class="text-left text-sm text-gray-500 hover:text-gray-800 mb-10 font-medium">
                 ← 메인으로
             </button>
@@ -200,13 +226,15 @@
             </button>
         </div>
 
-        <div id="view-gachaLoading" class="p-5 hidden flex-col items-center justify-center min-h-screen">
+        <!-- 가챠 로딩 -->
+        <div id="view-gachaLoading" class="view-section p-5 items-center justify-center">
             <img src="https://pbs.twimg.com/media/HEtpxY8bIAA5WkZ?format=jpg&name=small" class="w-32 h-32 rounded-full object-cover mb-6 shadow-sm border border-gray-100 animate-bounce-custom" alt="로딩 중">
             <p class="text-lg font-bold text-gray-700">운명의 혚쾌를 고르는 중이에요</p>
         </div>
 
-        <div id="view-gachaResult" class="p-4 hidden flex-col items-center justify-center min-h-screen bg-black/30 backdrop-blur-md fixed inset-0 z-50">
-            <div class="bg-white rounded-[2rem] w-full max-w-[400px] p-4 relative shadow-2xl animate-[fadeIn_0.3s_ease-out]">
+        <!-- 가챠 결과 모달 -->
+        <div id="view-gachaResult" class="view-section p-4 items-center justify-center bg-black/30 backdrop-blur-md fixed inset-0 z-50">
+            <div class="bg-white rounded-[2rem] w-full max-w-[400px] p-4 relative shadow-2xl">
                 <button onclick="navigate('gachaHome')" class="absolute top-4 right-4 text-gray-400 p-2 text-xl hover:text-gray-800 bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center z-10">✕</button>
                 <div class="w-full aspect-square bg-gray-50 rounded-[1.5rem] overflow-hidden mb-6 mt-8 p-1 flex items-center justify-center relative border border-gray-100">
                     <div class="absolute inset-0 flex items-center justify-center p-2">
@@ -226,15 +254,22 @@
 
     </div>
 
+    <div id="custom-toast"></div>
+
     <script>
-        // 업데이트된 스프레드시트 CSV 링크
         const SPREADSHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRC80s5f91fT_g0tIDmNTTGbhihJqxC6VeNQ643GjbeVB25_-ycP0Tj-uhaz3d4cqOVkjU829dO8TT3/pub?gid=0&single=true&output=csv";
 
         const state = {
             view: 'index',
-            items: [],
-            autoPlay: true
+            items: []
         };
+
+        function showAlert(msg) {
+            const toast = document.getElementById('custom-toast');
+            toast.innerText = msg;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
 
         async function init() {
             await loadData();
@@ -248,7 +283,6 @@
                 const csvText = await response.text();
                 state.items = parseCSV(csvText);
                 
-                // 데이터 로드 완료 후 떡밥 개수 업데이트 (썸네일이 있는 것만 카운트)
                 const gachaPool = state.items.filter(item => item.mediaUrl && item.mediaUrl.trim() !== '');
                 const gachaSubtitle = document.getElementById('gacha-subtitle');
                 if (gachaSubtitle) {
@@ -257,7 +291,7 @@
             } catch (error) {
                 console.error("Data Load Error:", error);
                 if(state.items.length === 0) {
-                     alert("데이터를 불러오지 못했습니다. 스프레드시트 링크와 권한을 확인해주세요.");
+                     showAlert("데이터를 불러오지 못했습니다.");
                 }
             }
         }
@@ -266,33 +300,24 @@
             const arr = [];
             const lines = str.split(/\r?\n/);
             if (lines.length < 2) return arr;
-
             const headers = splitCSVLine(lines[0]);
 
             for (let i = 1; i < lines.length; i++) {
                 if (!lines[i].trim()) continue;
                 const values = splitCSVLine(lines[i]);
                 const obj = {};
-                
                 headers.forEach((h, idx) => {
                     if(!h) return;
                     let val = values[idx] || '';
                     let key = h.trim();
                     val = val.replace(/^"|"$/g, '').trim(); 
-                    
                     if(key === '제목') obj.title = val;
                     if(key === '날짜') obj.date = val;
-                    if(key === '썸네일') {
-                        obj.mediaUrl = val.split(/[\s,]+/)[0].trim();
-                    }
+                    if(key === '썸네일') obj.mediaUrl = val.split(/[\s,]+/)[0].trim();
                     if(key === '링크') obj.link = val;
-                    
                     obj[key] = val; 
                 });
-
-                if(obj.title) {
-                    arr.push(obj);
-                }
+                if(obj.title) arr.push(obj);
             }
             return arr;
         }
@@ -314,36 +339,29 @@
         }
 
         function navigate(viewName) {
-            document.querySelectorAll('[id^="view-"]').forEach(el => {
-                el.classList.add('hidden');
-                el.classList.remove('flex');
+            // 모든 뷰 비활성화
+            document.querySelectorAll('.view-section').forEach(el => {
+                el.classList.remove('active');
             });
+            
+            // 타겟 뷰 활성화
             const targetView = document.getElementById(`view-${viewName}`);
-            
             if(targetView) {
-                targetView.classList.remove('hidden');
-                targetView.classList.add('flex');
+                targetView.classList.add('active');
             }
             
-            if(viewName === 'gachaResult') {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = 'hidden'; 
-            }
+            // 스크롤 위치 상단 초기화
+            document.getElementById('app').scrollTop = 0;
 
             if (viewName === 'anniversary') initAnniversary();
-            
-            document.getElementById('app').scrollTop = 0;
         }
 
-        // ==================== N년전 오늘 로직 ====================
         function initAnniversary() {
             const list = document.getElementById('anniversary-list');
             const dateText = document.getElementById('anniversary-date-text');
             list.innerHTML = '';
             
             const today = new Date();
-            
             const m1 = String(today.getMonth() + 1).padStart(2, '0');
             const d1 = String(today.getDate()).padStart(2, '0');
             const m2 = String(today.getMonth() + 1);
@@ -360,79 +378,50 @@
             });
 
             if (matches.length === 0) {
-                list.innerHTML = `
-                    <div class="bg-white rounded-3xl p-8 text-center shadow-sm border border-gray-100 mt-4">
-                        <div class="text-4xl mb-3 opacity-50">🍃</div>
-                        <p class="text-gray-500 font-medium">과거의 오늘 기록된 떡밥이 없어요.</p>
-                    </div>`;
+                list.innerHTML = `<div class="bg-white rounded-3xl p-8 text-center shadow-sm border border-gray-100 mt-4"><p class="text-gray-500 font-medium">기록된 떡밥이 없어요.</p></div>`;
                 return;
             }
 
             matches.forEach(item => {
                 const div = document.createElement('div');
-                div.className = "bg-white rounded-2xl p-4 flex gap-4 shadow-sm border border-gray-50 cursor-pointer hover:bg-gray-50 transition-colors active:scale-[0.98]";
-                
-                div.onclick = () => {
-                    if(item.link) window.open(item.link, '_blank');
-                };
-                
+                div.className = "bg-white rounded-2xl p-4 flex gap-4 shadow-sm border border-gray-50 cursor-pointer active:scale-[0.98]";
+                div.onclick = () => { if(item.link) window.open(item.link, '_blank'); };
                 let thumbSrc = item.mediaUrl || 'https://images.unsplash.com/photo-1594322436404-5a0526db4d13?w=100&auto=format&fit=crop';
-                
                 div.innerHTML = `
                     <div class="w-16 h-16 bg-gray-100 rounded-xl overflow-hidden shrink-0">
                         <img src="${thumbSrc}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1594322436404-5a0526db4d13?w=100&auto=format&fit=crop'">
                     </div>
                     <div class="flex flex-col justify-center">
-                        <div class="font-bold text-gray-800 text-sm mb-1 line-clamp-2">${item.title || ''}</div>
-                        <div class="text-xs text-blue-400 font-medium">${item.date || ''}</div>
-                    </div>
-                `;
+                        <div class="font-bold text-gray-800 text-sm mb-1 line-clamp-2">${item.title}</div>
+                        <div class="text-xs text-blue-400 font-medium">${item.date}</div>
+                    </div>`;
                 list.appendChild(div);
             });
         }
 
-        // ==================== 미디어 렌더링 ====================
         function renderMediaElement(item, containerId) {
             const container = document.getElementById(containerId);
             container.innerHTML = '';
             if(!item) return;
-            
-            const url = item.mediaUrl || '';
-            
             const img = document.createElement('img');
-            img.src = url;
+            img.src = item.mediaUrl;
             img.className = 'media-cover';
-            img.onerror = function() {
-                this.onerror = null; 
-                this.src = 'https://images.unsplash.com/photo-1594322436404-5a0526db4d13?q=80&w=400&auto=format&fit=crop'; 
-            };
+            img.onerror = function() { this.src = 'https://images.unsplash.com/photo-1594322436404-5a0526db4d13?q=80&w=400&auto=format&fit=crop'; };
             container.appendChild(img);
         }
 
-        // ==================== 가챠 로직 ====================
         function startGacha() {
-            if(state.items.length === 0) {
-                alert("데이터를 아직 불러오지 못했습니다.");
-                return;
-            }
-
-            // 썸네일(mediaUrl)이 존재하는 떡밥만 필터링
             const gachaPool = state.items.filter(item => item.mediaUrl && item.mediaUrl.trim() !== '');
-
             if(gachaPool.length === 0) {
-                alert("썸네일이 있는 떡밥이 없습니다.");
+                showAlert("뽑을 수 있는 떡밥이 없습니다.");
                 return;
             }
-
             navigate('gachaLoading');
             setTimeout(() => {
-                // 필터링된 데이터(gachaPool) 안에서만 랜덤 뽑기 진행
                 const item = gachaPool[Math.floor(Math.random() * gachaPool.length)];
-                
                 renderMediaElement(item, 'gacha-media');
-                document.getElementById('gacha-title').innerText = item.title || '';
-                document.getElementById('gacha-date').innerText = item.date || '';
-                
+                document.getElementById('gacha-title').innerText = item.title;
+                document.getElementById('gacha-date').innerText = item.date;
                 const linkBtn = document.getElementById('gacha-link-btn');
                 if(item.link) {
                     linkBtn.onclick = () => window.open(item.link, '_blank');
@@ -440,7 +429,6 @@
                 } else {
                     linkBtn.classList.add('hidden');
                 }
-
                 navigate('gachaResult');
             }, 1200);
         }
